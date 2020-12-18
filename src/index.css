@@ -2,6 +2,7 @@
   --primary-color: #36c;
   --primary-grey: #a2a9b1;
   --radius: 4px;
+  --error-color: #8e0000;
 }
 
 body {
