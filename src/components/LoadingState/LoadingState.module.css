@@ -1,4 +1,10 @@
 .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container.overlay {
   position: absolute;
   background-color: #0006;
   top: 0;

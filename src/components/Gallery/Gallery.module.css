@@ -1,6 +1,13 @@
-.container {
+.container :global(.infinite-scroll-component) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
+}
+
+.loadingContainer {
+  flex-basis: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 15px 0;
 }

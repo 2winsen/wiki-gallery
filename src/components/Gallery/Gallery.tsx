@@ -1,38 +1,61 @@
 import React from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { useParams } from 'react-router-dom';
+import { Optional } from '../../types/Optional';
 import { WikipediaData } from '../../types/WikipediaData';
+import { useWikipediaQuery } from '../../utils/useWikipediaQuery';
+import EmptyState from '../EmptyState/EmptyState';
+import ErrorState from '../ErrorState/ErrorState';
+import LoadingState from '../LoadingState/LoadingState';
 import styles from './Gallery.module.css';
 import GalleryItem from './GalleryItem/GalleryItem';
 
-interface Props {
-  data: WikipediaData;
+function getDataLength(data: Optional<WikipediaData[]>) {
+  if (!data) {
+    return 0;
+  }
+  return data.reduce((acc, curr) => acc += curr.pages.length, 0);
 }
 
-function Gallery({ data }: Props) {
-  // const [pageIndex, setPageIndex] = useState(0);
-  // const [data, setData] = useState(props.data);
-  // const { data, isLoading, isError } = useWikipediaQuery(criteria);
-  // const fetchMoreData = () => {
-  //   setPageIndex(pageIndex => pageIndex + 1);
-  //   // setData(d => ({ ...data, pages: [...d.pages, ...data.pages] }))
-  // };
+function hasMoreData(data: Optional<WikipediaData[]>) {
+  if (!data) {
+    return false;
+  }
+  const last = data[data.length - 1];
+  return Boolean(last.continuePage);
+}
 
+function Gallery() {
+  const { criteria } = useParams<{ criteria?: string }>();
+  const { data, isLoading, isError, size, setSize } = useWikipediaQuery(criteria || '');
+  let content;
+  if (isLoading) {
+    content = <LoadingState active overlay />
+  } else if (isError) {
+    content = <ErrorState />
+  } else if (data) {
+    content = data.map((d, dIndex) => {
+      if (d.pages.length) {
+        return d.pages.map((p, pIndex) => <GalleryItem key={pIndex} source={p.thumbnail.source} />)
+      }
+      return <EmptyState key={dIndex} />;
+    });
+  }
 
-  // const [cnt, setCnt] = useState(1)
-  // const pages = []
-  // for (let i = 0; i < cnt; i++) {
-  //   pages.push(<Page index={i} key={i} />)
-  // }
+  const fetchMoreData = () => setSize(size + 1);
+  const dataLength = getDataLength(data);
+  const hasMore = hasMoreData(data);
 
   return (
     <div className={styles.container}>
-      {/* <InfiniteScroll
-        dataLength={data.pages.length}
+      <InfiniteScroll
+        dataLength={dataLength}
         next={fetchMoreData}
-        hasMore={Boolean(data.continuePage)}
-        loader={<h4>Loading...</h4>}
-      > */}
-      {data.pages.map(p => <GalleryItem source={p.thumbnail.source} />)}
-      {/* </InfiniteScroll> */}
+        hasMore={hasMore}
+        loader={<div className={styles.loadingContainer}><LoadingState active /></div>}
+      >
+        {content}
+      </InfiniteScroll>
     </div>
   );
 }

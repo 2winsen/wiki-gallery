@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { joinStyles } from '../../../utils/utils';
 import { IconSearch } from '../Icon';
 import styles from './SearchForm.module.css';
 
@@ -14,7 +15,7 @@ function SearchForm(props: Props) {
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    history.push(`/result/${encodeURI(criteria)}`);    
+    history.push(`/result/${encodeURI(criteria)}`);
   }
 
   function handleInput(event: React.ChangeEvent<HTMLInputElement>) {
@@ -22,7 +23,7 @@ function SearchForm(props: Props) {
   }
 
   return (
-    <form className={[styles.searchForm, styles[props.size]].join(' ')} onSubmit={handleSubmit}>
+    <form className={joinStyles(styles.searchForm, styles[props.size])} onSubmit={handleSubmit}>
       <input className={styles.search} type="text" placeholder="e.g. Isaac Newton" onChange={handleInput} value={criteria} />
       <button className={styles.submit} type="submit"><IconSearch /></button>
     </form>

@@ -1,4 +1,3 @@
-import { Optional } from '../Optional';
 import { WikipediaData } from '../WikipediaData';
 
 interface ImageDTO {
@@ -16,31 +15,31 @@ interface QueryPageDTO {
 
 export interface WikipediaDataDTO {
   batchcomplete: string,
-  continue: {
+  continue?: {
     gimcontinue: string,
     continue: string,
   },
-  query: {
+  query?: {
     pages: QueryPageDTO
   };
 }
 
-export function toPO(dto: Optional<WikipediaDataDTO>): Optional<WikipediaData> {
-  if (!dto || !dto.query || !dto.query.pages) {
-    return undefined;
-  }
+export function toPO(dto: WikipediaDataDTO): WikipediaData {
   const toImage = (dto: ImageDTO) => ({
     source: dto.source,
     width: dto.width,
     height: dto.height,
   });
-  const pages = Object.values(dto.query.pages)
-    .map(pageDTO => ({
-      original: toImage(pageDTO.original),
-      thumbnail: toImage(pageDTO.thumbnail),
-    }));
+  let pages: WikipediaData['pages'] = [];
+  if (dto.query) {
+    pages = Object.values(dto.query.pages)
+      .map(pageDTO => ({
+        original: toImage(pageDTO.original),
+        thumbnail: toImage(pageDTO.thumbnail),
+      }));
+  }
   return {
-    continuePage: dto.continue.gimcontinue,
+    continuePage: dto.continue ? dto.continue.gimcontinue : '',
     pages,
   };
 }

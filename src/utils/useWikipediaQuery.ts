@@ -1,12 +1,14 @@
-import useSWR from 'swr';
+import { useSWRInfinite } from 'swr';
 import { toPO, WikipediaDataDTO } from '../types/dto/WikipediaDataDTO';
+import { Optional } from '../types/Optional';
+import { WikipediaData } from '../types/WikipediaData';
 
 /**
  * Query builder
  * https://en.wikipedia.org/wiki/Special:ApiSandbox#action=query&format=json&prop=pageimages&titles=bmw&generator=images&redirects=1&piprop=thumbnail%7Cname%7Coriginal&gimlimit=50
  * If there are more images gimcontinue value needs to be added to query param example gimcontinue=3772%7C2020_BMW_X1_sDrive18i_1.5_Front.jpg
  */
-function createWikipediaQueryUrl(searchCriteria: string) {
+function createWikipediaQueryUrl(searchCriteria: string, continuePage?: string) {
   const params = new URLSearchParams();
   params.append('action', 'query');
   params.append('format', 'json');
@@ -18,18 +20,39 @@ function createWikipediaQueryUrl(searchCriteria: string) {
   params.append('piprop', 'name|original|thumbnail');
   params.append('pithumbsize', '300');
   params.append('gimlimit', '20');
+  if (continuePage) {
+    params.append('gimcontinue', continuePage);
+  }
   return `${process.env.REACT_APP_API_HOST}/w/api.php?${params.toString()}`;
 }
 
-const fetcher = (url: string) => fetch(url).then(res => res.json());
+const getKey = (criteria: string) => (pageIndex: number, previousPageData: WikipediaDataDTO | null) => {
+  if (pageIndex === 0) {
+    return createWikipediaQueryUrl(criteria);
+  }
+  if (previousPageData) {
+    const previous = toPO(previousPageData);
+    if (!previous.continuePage) {
+      return null;
+    }
+    return createWikipediaQueryUrl(criteria, previous.continuePage);
+  }
+  return null;
+}
+
 
 export function useWikipediaQuery(criteria: string) {
-  const url = createWikipediaQueryUrl(criteria);
-  const { data, error } = useSWR<WikipediaDataDTO>(url, fetcher);
-  let wikipediaData = toPO(data);
+  const fetcher = (url: string) => fetch(url).then(res => res.json());
+  const { data, error, size, setSize } = useSWRInfinite<WikipediaDataDTO>(getKey(criteria), fetcher);
+  let wikipediaDataItems: Optional<WikipediaData[]> = undefined;
+  if (data) {
+    wikipediaDataItems = data.map(toPO);
+  }
   return {
-    data: wikipediaData,
+    data: wikipediaDataItems,
     isLoading: !error && !data,
-    isError: error
+    isError: error,
+    size,
+    setSize,
   }
 }
