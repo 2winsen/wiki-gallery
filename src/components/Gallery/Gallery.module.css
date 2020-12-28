@@ -2,7 +2,13 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+}
+
+.container :global(.infinite-scroll-component) > div {
+  margin: 5px;
+  min-width: 300px;
+  min-height: 150px;
 }
 
 .loadingContainer {

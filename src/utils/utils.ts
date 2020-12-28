@@ -1,4 +1,3 @@
-import { Optional } from "../types/Optional";
 
 export function constants() {
   return {

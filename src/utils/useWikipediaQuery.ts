@@ -40,7 +40,6 @@ const getKey = (criteria: string) => (pageIndex: number, previousPageData: Wikip
   return null;
 }
 
-
 export function useWikipediaQuery(criteria: string) {
   const fetcher = (url: string) => fetch(url).then(res => res.json());
   const { data, error, size, setSize } = useSWRInfinite<WikipediaDataDTO>(getKey(criteria), fetcher);

@@ -14,7 +14,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   min-height: 100vh;
+  width: 100vw;
+  padding: 0 20px;
+  box-sizing: border-box;
   flex-direction: column;
+}
+
+body.noScroll {
+  overflow: hidden;
 }
 
 code {

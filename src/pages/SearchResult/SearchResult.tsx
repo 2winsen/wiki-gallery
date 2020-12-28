@@ -19,7 +19,7 @@ function SearchResult() {
           <SearchForm size="small" value={criteria} />
         </div>
       </header>
-      <main className={styles.main}>
+      <main>
         <Gallery />
       </main>
     </div>

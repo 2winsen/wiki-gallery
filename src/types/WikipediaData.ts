@@ -4,7 +4,7 @@ interface Image {
   height: number,
 }
 
-interface Page {
+export interface Page {
   thumbnail: Image,
   original: Image,
 }

@@ -6,12 +6,13 @@ import styles from './LoadingState.module.css';
 interface Props {
   active: boolean;
   overlay?: boolean;
+  className?: string;
 }
 
-function LoadingState({ active, overlay }: Props) {
+function LoadingState({ active, overlay, className }: Props) {
   if (active) {
     return (
-      <div className={joinStyles(styles.container, overlay && styles.overlay)}>
+      <div className={joinStyles(styles.container, overlay && styles.overlay, className)}>
         <Spinner />
       </div>
     );
