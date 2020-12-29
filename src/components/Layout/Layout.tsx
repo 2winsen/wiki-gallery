@@ -10,7 +10,7 @@ function Layout({ children }: Props) {
     <>
       <main className={styles.main}>{children}</main>
       <footer className={styles.footer}>
-        This website uses material from the <a href="https://en.wikipedia.org/w/api.php">Wikipedia API</a>.
+        This website uses material from <a href="https://en.wikipedia.org/w/api.php">Wikipedia API</a>.
       </footer>
     </>
   );

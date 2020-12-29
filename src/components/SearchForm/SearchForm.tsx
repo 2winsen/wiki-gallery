@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { joinStyles } from '../../../utils/utils';
-import { IconSearch } from '../Icon';
+import { joinStyles } from '../../utils/utils';
+import { IconSearch } from '../Icon/Icon';
 import styles from './SearchForm.module.css';
 
 interface Props {

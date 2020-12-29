@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchForm from '../../components/Icon/SearchForm/SearchForm';
+import SearchForm from '../../components/SearchForm/SearchForm';
 import { constants } from '../../utils/utils';
 import styles from './Search.module.css';
 

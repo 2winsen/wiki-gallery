@@ -71,3 +71,21 @@ form button:hover {
 form button:active {
   filter: brightness(0.8);
 }
+
+.iconButton {
+  color: var(--primary-color);
+  cursor: pointer;
+  display: inline-block;
+}
+
+.iconButton svg {
+  width: 50px;
+}
+
+.iconButton:hover {
+  filter: brightness(1.1);
+}
+
+.iconButton:active {
+  filter: brightness(0.8);
+}

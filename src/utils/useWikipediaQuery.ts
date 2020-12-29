@@ -31,7 +31,7 @@ const getKey = (criteria: string) => (pageIndex: number, previousPageData: Wikip
     return createWikipediaQueryUrl(criteria);
   }
   if (previousPageData) {
-    const previous = toPO(previousPageData);
+    const previous = toPO(previousPageData, 0);
     if (!previous.continuePage) {
       return null;
     }

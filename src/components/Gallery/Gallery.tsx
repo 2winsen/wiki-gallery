@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useParams } from 'react-router-dom';
 import { Optional } from '../../types/Optional';
 import { Page, WikipediaData } from '../../types/WikipediaData';
 import { useOnWindowResize } from '../../utils/useOnWindowResize';
 import { useWikipediaQuery } from '../../utils/useWikipediaQuery';
+import { nextPage, previousPage } from '../../utils/utils';
 import EmptyState from '../EmptyState/EmptyState';
 import ErrorState from '../ErrorState/ErrorState';
 import LoadingState from '../LoadingState/LoadingState';
@@ -37,7 +38,10 @@ function Gallery() {
   const { data, isLoading, isError, size, setSize } = useWikipediaQuery(criteria || '');
   const dataLength = getDataLength(data);
   const hasMore = hasMoreData(data);
+  const [fullSize, setFullSize] = useState<Page>();
   const fetchMoreData = () => setSize(size + 1);
+  // In case we need next full size item but it is not yet loaded
+  const pendingDataIndex = useRef<number>();
 
   // In case screen size is large enough to show 20 items without scrollbar this effect fetches more automatically
   useEffect(() => {
@@ -53,13 +57,42 @@ function Gallery() {
     }
   }, [hasMore])
 
-  const [fullSize, setFullSize] = useState<Page>();
   function handleGalleryItemClick(page: Page) {
     setFullSize(page);
   }
 
   function handleFullSizeItemClick() {
     setFullSize(undefined);
+  }
+
+  useEffect(() => {
+    if (pendingDataIndex.current != null) {
+      if (data && data[pendingDataIndex.current]) {
+        setFullSize(data[pendingDataIndex.current].pages[0]);
+        pendingDataIndex.current = undefined;
+      }
+    }
+  }, [data]);
+
+  function handleNextItem() {
+    if (fullSize && data) {
+      const next = nextPage(data, fullSize);
+      if (next) {
+        setFullSize(next);
+      } else if (hasMore) {
+        fetchMoreData();
+        pendingDataIndex.current = fullSize.dataIndex + 1;
+      } else {
+        setFullSize(undefined);
+      }
+    }
+  }
+
+  function handlePreviousItem() {
+    if (fullSize && data) {
+      const previous = previousPage(data, fullSize);
+      setFullSize(previous);
+    }
   }
 
   let content;
@@ -74,18 +107,18 @@ function Gallery() {
       hasMore={hasMore}
       loader={<div className={styles.loadingContainer}><LoadingState active /></div>}
     >
-      {data.map((d, dIndex) => {
+      {data.map(d => {
         if (d.pages.length) {
-          return d.pages.map((p, pIndex) => <GalleryItem key={pIndex} page={p} onClick={handleGalleryItemClick} />)
+          return d.pages.map(p => <GalleryItem key={`${p.dataIndex}-${p.index}`} page={p} onClick={handleGalleryItemClick} />)
         }
-        return <EmptyState key={dIndex} />;
+        return <EmptyState key="empty" />;
       })}
     </InfiniteScroll>
   }
 
   return (
     <div className={styles.container}>
-      {fullSize && <FullSizeItem page={fullSize} onClick={handleFullSizeItemClick} />}
+      {fullSize && <FullSizeItem page={fullSize} onClick={handleFullSizeItemClick} onNext={handleNextItem} onPrevious={handlePreviousItem} />}
       {content}
     </div>
   );

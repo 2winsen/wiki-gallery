@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Gallery from '../../components/Gallery/Gallery';
-import SearchForm from '../../components/Icon/SearchForm/SearchForm';
+import SearchForm from '../../components/SearchForm/SearchForm';
 import { constants } from '../../utils/utils';
 import styles from './SearchResult.module.css';
 
