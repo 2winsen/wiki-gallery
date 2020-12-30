@@ -9,6 +9,7 @@ import { nextPage, previousPage } from '../../utils/utils';
 import EmptyState from '../EmptyState/EmptyState';
 import ErrorState from '../ErrorState/ErrorState';
 import LoadingState from '../LoadingState/LoadingState';
+import ScrollTop from '../ScrollTop/ScrollTop';
 import FullSizeItem from './FullSizeItem/FullSizeItem';
 import styles from './Gallery.module.css';
 import GalleryItem from './GalleryItem/GalleryItem';
@@ -120,6 +121,7 @@ function Gallery() {
     <div className={styles.container}>
       {fullSize && <FullSizeItem page={fullSize} onClick={handleFullSizeItemClick} onNext={handleNextItem} onPrevious={handlePreviousItem} />}
       {content}
+      {!fullSize && <ScrollTop />}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { joinStyles } from '../../utils/utils';
 import { IconSearch } from '../Icon/Icon';
+import TextInput from '../TextInput/TextInput';
 import styles from './SearchForm.module.css';
 
 interface Props {
@@ -24,7 +25,14 @@ function SearchForm(props: Props) {
 
   return (
     <form className={joinStyles(styles.searchForm, styles[props.size])} onSubmit={handleSubmit}>
-      <input className={styles.search} type="text" placeholder="e.g. Isaac Newton" onChange={handleInput} value={criteria} />
+      <TextInput
+        className={styles.search}
+        type="text"
+        placeholder="e.g. Isaac Newton"
+        onChange={handleInput}
+        onClear={() => setCriteria('')}
+        value={criteria}
+      />
       <button className={styles.submit} type="submit"><IconSearch /></button>
     </form>
   );

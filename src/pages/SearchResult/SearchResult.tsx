@@ -20,7 +20,7 @@ function SearchResult() {
         </div>
       </header>
       <main>
-        <Gallery />
+        <Gallery />        
       </main>
     </div>
   );

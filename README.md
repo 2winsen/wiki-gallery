@@ -5,9 +5,8 @@
 - [x] Share link
 - [x] Next/Prev full image (with keyboard)
 - [x] Filter ogg or by meta data
-- [ ] Mobile
-- [ ] Go to the top
-- [ ] Unit tests
+- [x] Mobile (Swipe in full size, go to the top, X in search)
 - [ ] Markdown
+- [ ] Unit tests
 - [ ] Random page
 - [ ] Suggestions

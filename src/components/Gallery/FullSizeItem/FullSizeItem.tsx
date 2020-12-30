@@ -1,6 +1,8 @@
 
 import React, { useEffect, useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
 import { Page } from '../../../types/WikipediaData';
+import { useArrowKeys } from '../../../utils/useArrowKeys';
 import { joinStyles } from '../../../utils/utils';
 import { IconShare, IconArrowCircleLeft, IconArrowCircleRight } from '../../Icon/Icon';
 import LoadingState from '../../LoadingState/LoadingState';
@@ -32,20 +34,14 @@ function FullSizeItem({ page, onClick, onNext, onPrevious }: Props) {
     onPrevious();
   }
 
-  useEffect(() => {
-    function handleKeyDown(e: KeyboardEvent) {
-      switch (e.key) {
-        case 'ArrowLeft':
-          onPrevious();
-          break;
-        case 'ArrowRight':
-          onNext();
-          break;
-        default:
-      }
-    }
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: onNext,
+    onSwipedRight: onPrevious,
+  });
+
+  useArrowKeys({
+    onRight: onNext,
+    onLeft: onPrevious,
   });
 
   return (
@@ -55,7 +51,7 @@ function FullSizeItem({ page, onClick, onNext, onPrevious }: Props) {
         <a href={page.original.source} target="_blank" rel="noreferrer" className="iconButton"><IconShare /></a>
       </div>
       <span className={joinStyles(styles.navigation, 'iconButton', styles.navigationLeft)} onClick={handlePrevious}><IconArrowCircleLeft /></span>
-      <img src={page.original.source} alt={page.original.source} onLoad={() => setLoaded(true)} />
+      <img src={page.original.source} alt={page.original.source} onLoad={() => setLoaded(true)} {...swipeHandlers} />
       <span className={joinStyles(styles.navigation, 'iconButton', styles.navigationRight)} onClick={handleNext}><IconArrowCircleRight /></span>
     </div>
   );

@@ -14,8 +14,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   min-height: 100vh;
-  width: 100vw;
-  padding: 0 20px;
+  padding: 0 10px;
   box-sizing: border-box;
   flex-direction: column;
   font-size: 14px;
@@ -46,7 +45,7 @@ code {
   flex: 1;
 }
 
-form input[type=text] {
+input[type=text] {
   border: 2px solid var(--primary-grey);
   outline-width: 0;
   border-radius: var(--radius);
@@ -54,11 +53,11 @@ form input[type=text] {
   min-width: 100px;
 }
 
-form input[type=text]:focus {
+input[type=text]:focus {
   border: 3px solid var(--primary-color);
 }
 
-form button {
+button {
   color: #fff;
   background-color: var(--primary-color);
   border: 1px solid var(--primary-color);
@@ -68,16 +67,16 @@ form button {
   padding: 0 1em;
 }
 
-form button svg {
+button svg {
   width: 1.2em;
   display: flex;
 }
 
-form button:hover {
+button:hover {
   filter: brightness(1.1);
 }
 
-form button:active {
+button:active {
   filter: brightness(0.8);
 }
 
@@ -85,10 +84,6 @@ form button:active {
   color: var(--primary-color);
   cursor: pointer;
   display: inline-block;
-}
-
-.iconButton svg {
-  width: 3em;
 }
 
 .iconButton:hover {
@@ -102,8 +97,6 @@ form button:active {
 @media (min-width: 1200px) {
   body {
     font-size: 16px;
-  }
-  .iconButton svg {
-    width: 3.5em;
+    padding: 0 20px;
   }
 }
