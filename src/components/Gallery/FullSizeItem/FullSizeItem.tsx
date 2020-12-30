@@ -54,9 +54,9 @@ function FullSizeItem({ page, onClick, onNext, onPrevious }: Props) {
       <div className={styles.actionPanel}>
         <a href={page.original.source} target="_blank" rel="noreferrer" className="iconButton"><IconShare /></a>
       </div>
-      <span className={joinStyles(styles.navigation, 'iconButton')} onClick={handlePrevious}><IconArrowCircleLeft /></span>
+      <span className={joinStyles(styles.navigation, 'iconButton', styles.navigationLeft)} onClick={handlePrevious}><IconArrowCircleLeft /></span>
       <img src={page.original.source} alt={page.original.source} onLoad={() => setLoaded(true)} />
-      <span className={joinStyles(styles.navigation, 'iconButton')} onClick={handleNext}><IconArrowCircleRight /></span>
+      <span className={joinStyles(styles.navigation, 'iconButton', styles.navigationRight)} onClick={handleNext}><IconArrowCircleRight /></span>
     </div>
   );
 }

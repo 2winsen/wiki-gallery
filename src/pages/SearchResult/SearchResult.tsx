@@ -13,9 +13,9 @@ function SearchResult() {
     <div className={styles.container}>
       <header className={styles.header}>
         <div className={styles.heading}>
-          <Link to="/">{appName}</Link>
+          <Link to="/"><h2>{appName}</h2></Link>
         </div>
-        <div className={styles.formContainer}>
+        <div className={styles.headerFormContainer}>
           <SearchForm size="small" value={criteria} />
         </div>
       </header>

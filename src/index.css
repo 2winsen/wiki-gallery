@@ -18,6 +18,15 @@ body {
   padding: 0 20px;
   box-sizing: border-box;
   flex-direction: column;
+  font-size: 14px;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
 }
 
 body.noScroll {
@@ -79,7 +88,7 @@ form button:active {
 }
 
 .iconButton svg {
-  width: 50px;
+  width: 3em;
 }
 
 .iconButton:hover {
@@ -88,4 +97,13 @@ form button:active {
 
 .iconButton:active {
   filter: brightness(0.8);
+}
+
+@media (min-width: 1200px) {
+  body {
+    font-size: 16px;
+  }
+  .iconButton svg {
+    width: 3.5em;
+  }
 }

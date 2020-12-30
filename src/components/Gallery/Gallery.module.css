@@ -6,7 +6,7 @@
 }
 
 .container :global(.infinite-scroll-component) > div {
-  margin: 5px;
+  margin: 10px;
   min-width: 300px;
   min-height: 150px;
 }

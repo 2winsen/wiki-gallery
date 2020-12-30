@@ -8,7 +8,7 @@
   background-color: #000e;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .container img {
@@ -31,5 +31,21 @@
 }
 
 .navigation {
-  margin: 15px;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .navigation {
+    margin: 15px;
+    display: block;
+    position: absolute;
+  }
+
+  .navigationRight {
+    right: 0;
+  }
+
+  .navigationLeft {
+    left: 0;
+  }
 }
