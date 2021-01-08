@@ -44,3 +44,9 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 - [ ] Unit tests
 - [ ] Random page
 - [ ] Suggestions
+
+## Context path
+
+Due to deployment to Github pages `wiki-gallery` context path is added in few places:
+- package.json -> homepage
+- App.tsx -> basename

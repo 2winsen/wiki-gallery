@@ -23,7 +23,7 @@ function createWikipediaQueryUrl(searchCriteria: string, continuePage?: string) 
   if (continuePage) {
     params.append('gimcontinue', continuePage);
   }
-  return `${process.env.REACT_APP_API_HOST}/w/api.php?${params.toString()}`;
+  return `${process.env.REACT_APP_API_HOST}/w/api.php?${params.toString()}&origin=*`;
 }
 
 const getKey = (criteria: string) => (pageIndex: number, previousPageData: WikipediaDataDTO | null) => {
@@ -41,7 +41,13 @@ const getKey = (criteria: string) => (pageIndex: number, previousPageData: Wikip
 }
 
 export function useWikipediaQuery(criteria: string) {
-  const fetcher = (url: string) => fetch(url).then(res => res.json());
+  const fetcher = (url: string) => {
+    return fetch(url, {
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8'
+      }
+    }).then(res => res.json())
+  };
   const { data, error, size, setSize } = useSWRInfinite<WikipediaDataDTO>(getKey(criteria), fetcher);
   let wikipediaDataItems: Optional<WikipediaData[]> = undefined;
   if (data) {

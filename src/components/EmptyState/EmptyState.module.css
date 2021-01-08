@@ -7,3 +7,7 @@
 .content {
   text-align: center;
 }
+
+.content svg {
+  width: 200px;
+}

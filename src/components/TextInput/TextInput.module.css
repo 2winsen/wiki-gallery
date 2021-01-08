@@ -19,5 +19,6 @@ input.inputElement {
 }
 
 .clearButton svg {
-  height: 50%;
+  width: 2em;
+  height: 2em;
 }

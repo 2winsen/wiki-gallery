@@ -13,6 +13,6 @@
 }
 
 .content svg {
-  max-height: 200px;
   color: var(--error-color);
+  width: 200px;
 }
