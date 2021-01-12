@@ -11,6 +11,7 @@
 .search {
   flex: 1;
   font-size: 1.3em;
+  width: 100%;
 }
 .searchForm.small .search {
   font-size: 1em;
